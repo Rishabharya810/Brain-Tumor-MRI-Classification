@@ -100,16 +100,21 @@ The leakage finding independently reproduces published results for this dataset 
 
 Everything ran on a single Kaggle Tesla T4 in **~2 hours** (notebook: [notebooks/brain_tumor_mri_v2_t4.ipynb](notebooks/brain_tumor_mri_v2_t4.ipynb) — the actual executed run, outputs included):
 
-1. On Kaggle: create a notebook with GPU enabled, attach the `masoudnickparvar/brain-tumor-mri-dataset` input, upload the notebook, **Save & Run All**. The prep cell installs `grad-cam`/`onnx`/`onnxruntime` and links the dataset; every stage is idempotent and resumable.
+1. On Kaggle: create a notebook with GPU enabled, attach the `masoudnickparvar/brain-tumor-mri-dataset` input, upload the notebook, **Save & Run All**. (To guarantee bit-identical data, use the pinned snapshot ZIP from the Release instead — see [data/DATASET_SNAPSHOT.md](data/DATASET_SNAPSHOT.md).) The prep cell installs `grad-cam`/`onnx`/`onnxruntime` and links the dataset; every stage is idempotent and resumable.
 2. Environment: see [requirements.txt](requirements.txt) (recorded from the actual run: Python 3.12, torch 2.10.0+cu128, timm 1.0.26, scikit-learn 1.6.1).
 
-**Trained weights** (all six models + the two seed variants, ~100 MB) are attached to this repository's GitHub *Release* rather than committed to git — see the Releases page.
+**Trained weights** (all six models + the two seed variants, ~100 MB) and the **pinned dataset snapshot ZIP** (167.8 MB, checksummed in [data/file_hashes.csv](data/file_hashes.csv)) are attached to this repository's GitHub *Release* rather than committed to git — see the Releases page. The dataset author may update the data at any time; the Release snapshot + `data/DATASET_SNAPSHOT.md` fix exactly what this project used, so its numbers stay verifiable regardless.
 
 ## Repository map
 
 ```
 ├── README.md                     this file
 ├── requirements.txt              pinned environment recorded from the actual run
+├── data/
+│   ├── DATASET_SNAPSHOT.md       the exact dataset this project used — pinned forever
+│   └── file_hashes.csv           MD5 checksums of all 7,200 files
+│       (the image folder itself is kept out of git; the snapshot ZIP
+│        ships as a GitHub Release asset)
 ├── notebooks/
 │   └── brain_tumor_mri_v2_t4.ipynb    the full pipeline — as executed on the T4
 └── results/                      every artifact the run produced
