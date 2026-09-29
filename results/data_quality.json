@@ -1,0 +1,8 @@
+{
+  "exact_duplicates_within_train": 171,
+  "exact_duplicates_within_test": 16,
+  "exact_duplicates_train_test_overlap": 0,
+  "near_duplicates_test_with_near_match_in_train (pHash Hamming<=8)": 1248,
+  "near_duplicate_pairs_test_x_train": 4740,
+  "note": "Slice-level MRI scans of the same patient commonly appear on both sides of the split; per-image metrics therefore overestimate patient-level generalisation. Reported honestly, not fixed by surgery on the dataset (that would change the benchmark)."
+}

@@ -1,0 +1,32 @@
+{
+  "recorded_at": "2026-09-29T17:38:06",
+  "machine": "Linux-6.12.90+-x86_64-with-glibc2.35",
+  "processor": "x86_64",
+  "training_device": "cuda",
+  "device_name": "CUDA GPU",
+  "torch_threads": 4,
+  "pkg_python": "3.12.13",
+  "pkg_torch": "2.10.0+cu128",
+  "pkg_timm": "1.0.26",
+  "pkg_albumentations": "2.0.8",
+  "pkg_opencv": "4.13.0",
+  "pkg_sklearn": "1.6.1",
+  "pkg_numpy": "2.0.2",
+  "pkg_pandas": "2.3.3",
+  "dataset_dir": "/kaggle/working/Brain_tumor_MRI_Dataset",
+  "dataset_counts": {
+    "train": {
+      "glioma": 1400,
+      "meningioma": 1400,
+      "notumor": 1400,
+      "pituitary": 1400
+    },
+    "test": {
+      "glioma": 400,
+      "meningioma": 400,
+      "notumor": 400,
+      "pituitary": 400
+    }
+  },
+  "dataset_provenance": "Kaggle 'Brain Tumor MRI Dataset' by Masoud Nickparvar (masoudnickparvar/brain-tumor-mri-dataset). Public Kaggle version: 5,600 Training / 1,600 Testing (balanced 1,400/class train, 400/class test). Local v2 copy: 5,712 Training / 1,311 Testing (unbalanced). Combines Figshare (Cheng Jun) + SARTAJ + Br35H. The original notebook's download cell cited sartajbhuvaji/brain-tumor-classification-mri, which is a DIFFERENT dataset (2,870/3,919) - citation corrected in v2."
+}

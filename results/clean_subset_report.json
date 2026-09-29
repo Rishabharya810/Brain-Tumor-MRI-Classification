@@ -1,0 +1,61 @@
+{
+  "clean_test_images": 438,
+  "dirty_test_images": 1162,
+  "near_duplicate_rule": "pHash Hamming<=8 vs actual training split",
+  "rows": [
+    {
+      "Model": "Baseline-CNN",
+      "Full test acc (%)": 64.06,
+      "Clean subset acc (%)": 55.48,
+      "Drop (pp)": 8.58,
+      "Full macro-F1": 0.6354,
+      "Clean macro-F1": 0.5498,
+      "Clean n": 438
+    },
+    {
+      "Model": "EfficientNet-B0",
+      "Full test acc (%)": 96.31,
+      "Clean subset acc (%)": 89.5,
+      "Drop (pp)": 6.81,
+      "Full macro-F1": 0.9626,
+      "Clean macro-F1": 0.8877,
+      "Clean n": 438
+    },
+    {
+      "Model": "MobileNetV3-Small",
+      "Full test acc (%)": 95.44,
+      "Clean subset acc (%)": 87.21,
+      "Drop (pp)": 8.22,
+      "Full macro-F1": 0.9536,
+      "Clean macro-F1": 0.8685,
+      "Clean n": 438
+    },
+    {
+      "Model": "MobileViT-S",
+      "Full test acc (%)": 95.0,
+      "Clean subset acc (%)": 86.53,
+      "Drop (pp)": 8.47,
+      "Full macro-F1": 0.9489,
+      "Clean macro-F1": 0.856,
+      "Clean n": 438
+    },
+    {
+      "Model": "DeiT-Tiny",
+      "Full test acc (%)": 95.19,
+      "Clean subset acc (%)": 86.3,
+      "Drop (pp)": 8.89,
+      "Full macro-F1": 0.9509,
+      "Clean macro-F1": 0.851,
+      "Clean n": 438
+    },
+    {
+      "Model": "TinyViT-5M",
+      "Full test acc (%)": 95.5,
+      "Clean subset acc (%)": 86.99,
+      "Drop (pp)": 8.51,
+      "Full macro-F1": 0.9541,
+      "Clean macro-F1": 0.8581,
+      "Clean n": 438
+    }
+  ]
+}
