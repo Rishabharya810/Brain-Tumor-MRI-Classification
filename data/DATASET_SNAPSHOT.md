@@ -10,6 +10,7 @@ This folder pins the **exact dataset** that produced every number in this reposi
 | Author | Masoud Nickparvar |
 | Version used | **Version 2** ("Update 2026-02-13" — the second release; Version 1 was the 2021 initial release) |
 | License | CC BY 4.0 |
+| DOI | https://doi.org/10.34740/kaggle/dsv/14832123 |
 | Downloaded | from the Kaggle dataset page / CLI, September 2026 |
 | Size | 7,200 JPEG images, 167.8 MB |
 | Structure | `Training/` 5,600 images (glioma/meningioma/notumor/pituitary = 1,400 each) · `Testing/` 1,600 images (400 each) |
@@ -17,12 +18,14 @@ This folder pins the **exact dataset** that produced every number in this reposi
 
 ## Verify the snapshot
 
-- `file_hashes.csv` lists the **MD5 checksum, path and byte size of all 7,200 files** exactly as the pipeline consumed them (the notebook links this folder at `./Brain_tumor_MRI_Dataset`).
-- A ZIP of this exact folder is attached to the repository's GitHub **Release**. To confirm a copy matches the run: hash the files and compare against `file_hashes.csv`, e.g. `md5sum -c` after stripping the folder prefix, or with any CSV/`pandas` comparison.
+- `checksums.sha256` is the canonical manifest: **SHA-256 of all 7,200 files**, in standard `sha256sum -c` format. One command verifies any copy: `bash data/download_and_verify.sh <extracted-folder>`.
+- `checksums.zip.sha256` pins the two Release assets (the dataset snapshot zip and the trained-weights zip).
+- A ZIP of this exact folder is attached to the repository's GitHub **Release** (`brain-tumor-mri-dataset-v2-snapshot.zip`, 170.1 MB). (`file_hashes.csv` is the same manifest in pandas-friendly MD5 form.)
+- Re-download from the source at the pinned version: `python -c "import kagglehub; kagglehub.dataset_download('masoudnickparvar/brain-tumor-mri-dataset/versions/2')"`. Note: the classic Kaggle CLI has **no version flag** — it silently fetches whatever is latest — which is exactly why this repo pins bytes instead of links.
 
 ## Redistribution & attribution (CC BY 4.0)
 
-The dataset is redistributed unmodified, as permitted by its license. Attribution: **"Brain Tumor MRI Dataset" by Masoud Nickparvar, CC BY 4.0** ([license text](https://creativecommons.org/licenses/by/4.0/)). The underlying source datasets belong to their respective authors (Cheng et al. / Figshare; SARTAJ; Br35H). No changes were made to any image or label.
+The dataset is redistributed unmodified, as permitted by its license. Attribution follows the TASL convention in [`LICENSES/THIRD-PARTY-NOTICES.md`](LICENSES/THIRD-PARTY-NOTICES.md) — **Title, Author, Source, License** — with the full CC BY 4.0 legal text alongside it; the Release zip carries the same notices. The underlying source datasets belong to their respective authors (Cheng et al. / Figshare; SARTAJ; Br35H). No changes were made to any image or label.
 
 ## Known data-quality facts about this snapshot (from this project's audit)
 
