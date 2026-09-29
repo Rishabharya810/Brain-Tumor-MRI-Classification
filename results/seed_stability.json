@@ -1,0 +1,27 @@
+{
+  "best_model": "EfficientNet-B0",
+  "runs": [
+    {
+      "run": "EfficientNet-B0",
+      "seed": 42,
+      "test acc (%)": 96.31,
+      "macro-F1": 0.9626
+    },
+    {
+      "run": "EfficientNet-B0_s43",
+      "seed": 43,
+      "test acc (%)": 95.75,
+      "macro-F1": 0.9569
+    },
+    {
+      "run": "EfficientNet-B0_s44",
+      "seed": 44,
+      "test acc (%)": 95.69,
+      "macro-F1": 0.9566
+    }
+  ],
+  "acc_mean": 95.91666666666667,
+  "acc_std_pp": 0.279205221218294,
+  "f1_mean": 0.9587,
+  "f1_std": 0.002760434748368462
+}

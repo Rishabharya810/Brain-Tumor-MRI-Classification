@@ -1,0 +1,7 @@
+Model,Type,Params (M),Size (MB),Accuracy (%),Macro-F1,Macro-P,Macro-R,Best epoch
+EfficientNet-B0,CNN,4.01,16.05,96.31,0.9626,0.9644,0.9631,15
+TinyViT-5M,ViT,5.07,20.29,95.5,0.9541,0.9572,0.955,21
+MobileNetV3-Small,CNN,1.52,6.09,95.44,0.9536,0.9572,0.9544,26
+DeiT-Tiny,ViT,5.53,22.1,95.19,0.9509,0.9543,0.9519,16
+MobileViT-S,Hybrid ViT,4.94,19.76,95.0,0.9489,0.9532,0.95,20
+Baseline-CNN,CNN,0.09,0.38,64.06,0.6354,0.6414,0.6406,27
