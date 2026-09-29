@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: >-
+  If you use this project's audit procedure or results, please cite this
+  repository and the dataset (see data/LICENSES/THIRD-PARTY-NOTICES.md).
+type: software
+title: 'Brain Tumor MRI Classification — and an audit of the benchmark everyone gets 99% on'
+authors:
+  - family-names: Arya
+    given-names: Rishab
+repository-code: 'https://github.com/Rishabharya810/brain-tumor-mri-classification'
+abstract: >-
+  Four-class brain-tumor MRI classification with a data-quality audit:
+  73% of the benchmark's test set shares a perceptual hash with its training
+  split. Dual metrics (96.31% full test / 89.50% on the 438 leak-free images),
+  a 90k-parameter baseline, 3-seed stability, and Grad-CAM failure analysis.
+keywords:
+  - brain-tumor
+  - mri
+  - classification
+  - data-leakage
+  - benchmark-audit
+  - pytorch
+license: MIT
