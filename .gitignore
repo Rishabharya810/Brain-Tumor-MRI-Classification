@@ -2,5 +2,5 @@ __pycache__/
 .ipynb_checkpoints/
 *.pth
 *.onnx
-data/
+data/Brain_tumor_MRI_Dataset/
 results/models/
