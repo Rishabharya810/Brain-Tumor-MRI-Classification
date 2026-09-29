@@ -1,0 +1,15 @@
+# Recorded from the actual Kaggle T4 run (Python 3.12.13, CUDA 12.8).
+# Versions pinned where the run's environment.json recorded them.
+torch==2.10.0
+timm==1.0.26
+albumentations==2.0.8
+opencv-python==4.13.0.66
+scikit-learn==1.6.1
+numpy==2.0.2
+pandas==2.3.3
+matplotlib
+grad-cam          # latest; installed by the notebook's prep cell on Kaggle
+onnx
+onnxruntime
+imagehash
+Pillow
