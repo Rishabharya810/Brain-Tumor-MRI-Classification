@@ -107,8 +107,11 @@ Everything ran on a single Kaggle Tesla T4 in **~2 hours** (notebook: [notebooks
 
 ## Repository map
 
+The [CHANGELOG](CHANGELOG.md) records how this project evolved — four iterations, each existing because the previous one taught us something (it is also the short version of the audit story).
+
 ```
 ├── README.md                     this file
+├── CHANGELOG.md                  four iterations, each existing because the previous one taught us something
 ├── requirements.txt              pinned environment recorded from the actual run
 ├── data/
 │   ├── DATASET_SNAPSHOT.md       the exact dataset this project used — pinned forever
