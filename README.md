@@ -49,7 +49,7 @@ Every stage writes its artifacts to disk and marks itself complete in a manifest
 | 12 | **Seed stability** — best model re-trained at seeds 43/44; reported as mean ± std |
 | 13 | SUMMARY.md assembled from the stage records only (no recomputation) |
 
-All six models train from scratch (no ImageNet pretraining) with an identical recipe — AdamW, cosine schedule, early stopping on validation macro-F1, batch 16, seed 42 — so the comparison measures architecture, not budget.
+All five architectures start from ImageNet-initialized weights (standard transfer learning) and are fine-tuned under an identical recipe — AdamW, cosine schedule, early stopping on validation macro-F1, batch 16, seed 42 — so the comparison measures architecture, not training budget. The only truly from-scratch model is the 90k-parameter BaselineCNN, which doubles as the no-pretraining floor: 64% vs 95%+ says pretraining matters far more than architecture on this benchmark.
 
 ## Results
 
