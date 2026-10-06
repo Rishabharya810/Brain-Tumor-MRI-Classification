@@ -7,7 +7,7 @@ per-version artifacts referenced in each entry.
 
 ## [v8] — T4 edition, the published version — 2026-09-29
 
-The whole pipeline rebuilt for one Tesla T4 on Kaggle: six models trained from scratch, every stage
+The whole pipeline rebuilt for one Tesla T4 on Kaggle: five ImageNet-initialized lightweight architectures plus one truly-from-scratch 90k-parameter baseline, every stage
 idempotent and resumable, and the benchmark itself audited before any number was trusted.
 
 **Added**
