@@ -1,14 +1,14 @@
 {
-  "EfficientNet-B0": {
-    "onnx": "/kaggle/working/results/exports/EfficientNet-B0.onnx",
-    "size_mb": 16.03,
-    "max_abs_diff": 6.532669067382812e-05,
-    "parity_ok": true
-  },
   "MobileNetV3-Small": {
     "onnx": "/kaggle/working/results/exports/MobileNetV3-Small.onnx",
     "size_mb": 6.1,
-    "max_abs_diff": 4.1961669921875e-05,
+    "max_abs_diff": 3.0040740966796875e-05,
+    "parity_ok": true
+  },
+  "TinyViT-5M": {
+    "onnx": "/kaggle/working/results/exports/TinyViT-5M.onnx",
+    "size_mb": 20.86,
+    "max_abs_diff": 4.76837158203125e-06,
     "parity_ok": true
   }
 }

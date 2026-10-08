@@ -28,6 +28,27 @@ idempotent and resumable, and the benchmark itself audited before any number was
   result (INT8 failed the ΔF1 ≤ 1pp gate even on CPU, and collapsed on the T4 GPU plugin) — an honest
   deployment finding, recorded in v7's artifacts, not worth re-running on a GPU box.
 
+## [Publication run] — the three-exam edition — 2026-10-07
+
+The version that shipped to Kaggle and GitHub: everything below plus the additions the final design review locked.
+
+**Added**
+- **ResNet-50** (the literature's anchor) and **Xception-Reference** — the exact "99% accuracy" notebook's recipe
+  (ImageNet-pretrained, fully fine-tuned, native 299×299) — so the famous recipe could be scored honestly. It scores
+  95.19% under this protocol, not 99.
+- **Family-disjoint re-split** (Stage 13): dual-evidence near-duplicate families (pHash ≤ 8 AND deep-feature cosine ≥ 0.95),
+  whole-family stratified split, every model retrained from zero → 1,440-image exam where leakage is structurally impossible.
+- **Ensemble of the five lightweights** (Stage 14), scored on all three exams — it beats the best single model nowhere.
+- **Per-class clean-subset analysis** — glioma recall falls 0.868 → 0.729 when contamination is removed.
+- Seed stability now reports mean ± std for whichever model wins (TinyViT-5M: 95.79 ± 0.28).
+- Story-mode notebook: table of contents, per-stage "why this exists" notes, references with DOIs.
+- Corrected a wording error from earlier editions: the five architectures are ImageNet-initialized (transfer learning);
+  only the 90k baseline trains truly from scratch.
+
+**The finding, refined into three tiers:** official 95.1–96.1; strictly de-contaminated remnant 86.5–88.8 (selection-biased,
+pessimistic); fair family-disjoint exam 94.4–97.2 — models genuinely generalize, the leak's real damage is converting weak
+protocols into 99% headlines and hiding the benchmark's hard core.
+
 ## [v7] — first complete cloud run — 2026-09-29
 
 First time every stage of the rebuilt pipeline executed end-to-end, on Kaggle (T4), all stages clean.

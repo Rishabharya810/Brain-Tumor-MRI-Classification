@@ -1,138 +1,138 @@
-# Brain Tumor MRI Classification — and an audit of the benchmark everyone gets 99% on
+# Brain Tumor MRI: Why 99% Is a Leak — measured on three exams
 
-Four-class brain-tumor MRI classification (glioma / meningioma / pituitary / no tumor) on the most-used public dataset for this task — built as an honest pipeline that audits its own benchmark before trusting its own numbers.
+Four-class brain-tumor MRI classification (glioma / meningioma / no tumor / pituitary) on the most-used public dataset for this task — built as an honest pipeline that audits its own benchmark, then scores every model **three ways**: the official benchmark, its strictly de-contaminated remnant, and a **family-disjoint re-split** (re-drawn so the same patient's scans can never appear on both sides) with every model retrained from zero.
 
-**The short version:** I trained six models (a 90k-parameter baseline plus five lightweight architectures) on the "Brain Tumor MRI Dataset" and got **96.31% accuracy** on its sealed 1,600-image test set — consistent with the 99%-class results this benchmark usually produces. Then I audited the benchmark itself: **73% of the test images (1,162 of 1,600) share a perceptual hash with the training split** — MRI slices of the *same patients* on both sides of the split. On the 438 genuinely uncontaminated test images, the best model scores **89.50%** — a 6.8-point leakage premium that every 99% headline on this dataset is silently collecting. The best model is stable across three seeds (**95.92% ± 0.28 pp**), and its errors concentrate where clinicians find them hard too (glioma → meningioma).
+**The short version:** eight models trained under one honest protocol land within **one point** of each other (95.1–96.1%) on the official 1,600-image test — including **the exact recipe behind the famous "99% accuracy" notebook** (ImageNet-pretrained Xception, fully fine-tuned), which scores **95.19% here, not 99**. The audit shows why: **73% of the test images share a perceptual hash with the training split** (same patients on both sides). On the 438-image uncontaminated remnant every model drops 7–9 points (best: 88.8%); on the fair family-disjoint exam most models score *at or above* their official marks (94.4–97.2%), matching published patient-disjoint results. The leak's real damage is not inflating good models — it's letting weak protocols fake 99 while hiding the benchmark's hard core. An ensemble of five models gains nothing anywhere (more saturation evidence), and the best model is stable across three seeds (95.79 ± 0.28).
 
-> **Headline claim: 96.31% is what this benchmark reports. 89.5% is the honest estimate on its uncontaminated portion. The gap is the finding.**
+> **Headline: the famous 99% is a protocol artifact. Under an honest protocol the same recipe scores 95.19. Models genuinely generalize at 95–97% — but only the audit can tell you which part of any score is memory.**
 
 ---
 
 ## Why this project looks the way it does
 
-This is a rebuild of an earlier course project that reported 99.31%. A forensic re-audit of that original run found it had trained on CPU while being presented as a cloud-GPU run, executed with a **broken scikit-learn** (its `roc_auc_score` literally returned 0.5 — every metric was a homemade approximation), and duplicated rows across sessions. Rather than patch the numbers, I rebuilt the pipeline from scratch with the discipline the original lacked: stage-gated execution, atomic artifacts, real metrics, seeded everything, and a data-quality audit *before* trusting any accuracy. The full original-flaws → fixes table is in [the notebook](notebooks/brain_tumor_mri_v2_t4.ipynb).
+This is a rebuild of an earlier course project that reported 99.31%. A forensic re-audit of that original run found it had trained on CPU while being presented as a cloud-GPU run, executed with a **broken scikit-learn** (its `roc_auc_score` literally returned 0.5 — every metric was a homemade approximation), and duplicated rows across sessions. Rather than patch the numbers, I rebuilt the pipeline from scratch with the discipline the original lacked: stage-gated execution, atomic artifacts, real metrics, seeded everything, and a data-quality audit *before* trusting any accuracy. The full original-flaws → fixes table is in the [notebook](notebooks/brain_tumor_mri.ipynb) and [CHANGELOG](CHANGELOG.md).
 
-The rebuild's headline number came out ~3 points *lower* than the original's — which prompted the obvious question: why do all projects on this dataset hover near 99%? The audit below is the answer.
+The rebuild's headline came out lower than the original's — which prompted the question this project actually answers: why do all projects on this dataset hover near 99%? The audit below is the response.
 
 ## The data — and its leakage problem
 
-**Dataset:** [Brain Tumor MRI Dataset](https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset) by Masoud Nickparvar (CC BY 4.0), Version 2 (updated Feb 2026), 5,600 training / 1,600 testing images, balanced 1,400/400 per class. It combines three public collections — the [Figshare dataset (Cheng)](https://figshare.com/articles/dataset/brain_tumor_dataset/1512427), the [SARTAJ dataset](https://www.kaggle.com/datasets/sartajbhuvaji/brain-tumor-classification-mri), and [Br35H](https://www.kaggle.com/datasets/ahmedhamada0/brain-tumor-detection) — MRI scans of ~233 patients total, slice-level.
+**Dataset:** [Brain Tumor MRI Dataset](https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset) by Masoud Nickparvar (CC BY 4.0), Version 2 (Feb 2026), 5,600 training / 1,600 testing images, balanced 1,400/400 per class. It combines three public collections — [Figshare (Cheng)](https://figshare.com/articles/dataset/brain_tumor_dataset/1512427), [SARTAJ](https://www.kaggle.com/datasets/sartajbhuvaji/brain-tumor-classification-mri), and [Br35H](https://www.kaggle.com/datasets/ahmedhamada0/brain-tumor-detection) — scans of ~233 patients total, slice by slice. The exact snapshot is pinned in this repo with SHA-256 checksums of all 7,200 files ([data/DATASET_SNAPSHOT.md](data/DATASET_SNAPSHOT.md)).
 
-Version 2 already did real cleaning: it removed duplicates, balanced the classes, and **eliminated exact train/test overlap**. My audit (exact MD5 hashing + perceptual hashing, pHash Hamming ≤ 8) confirms the exact-copy overlap is now zero — but the deeper problem survives, because *slice-level scans of the same patient sit on both sides of the split*:
+Version 2 already did real cleaning: duplicates removed, classes balanced, **exact train↔test copies eliminated** (our MD5 audit confirms: zero). But the deeper problem survives, because slice-level scans of the same patient sit on both sides of the split:
 
-| Audit finding (this run) | Count |
+| Audit finding (this run, recomputed in the notebook) | Count |
 |---|---|
 | Exact train↔test copies (the flaw Version 2 fixed) | **0** |
-| Test images with a near-duplicate (pHash ≤ 8) somewhere in the raw Training folder | 1,248 / 1,600 (78%) |
+| Test images with a near-duplicate (pHash ≤ 8) in the raw Training folder | 1,248 / 1,600 (78%) |
 | Test images with a near-duplicate in the **actual 4,480-image training split** | **1,162 / 1,600 (73%)** |
-| Exact duplicate files within train / within test | 171 / 16 |
+| Exact duplicates within train / within test | 171 / 16 |
+| Dual-evidence near-duplicate links (pHash ≤ 8 **and** deep-feature cosine ≥ 0.95) | 4,121 |
+| Families (connected components of dual links) / largest / cross-class | 5,279 / 26 / 4 |
 
-This is not an exotic discovery — it independently reproduces what 2025 medical-imaging literature reports for this exact dataset family (see *Related work*). But most projects using it still quote 99%+ with no disclosure. The audit is a first-class pipeline stage here (Stage 2), and the honest re-scoring (Stage 11) is the headline result.
-
-**One rule this project enforces:** accuracies are never compared across dataset editions. The 99.31% of the original project and the 96.31% here were scored on *different* test sets (Version 1 vs Version 2) — only the numbers inside one run are comparable.
-
-![Dataset distribution](results/plots/dataset_distribution.png)
+This independently replicates what 2025–26 medical-imaging literature reports for this dataset family (see *Related work*). One rule this project enforces: accuracies are never compared across dataset editions — the original 99.31% was scored on the 2021 Version 1 with a different split.
 
 ## What the pipeline does
 
-Every stage writes its artifacts to disk and marks itself complete in a manifest; re-running skips finished work, interrupted training resumes mid-epoch, and the comparison table is rebuilt from per-model JSON records (a duplicate row is structurally impossible):
+Every stage writes its artifacts and marks itself complete in a manifest; re-running skips finished work, interrupted training resumes mid-epoch, and the final summary is assembled *only* from the stage records (a contradictory number is structurally impossible):
 
 | Stage | What it does |
 |---|---|
-| 1–4 | Environment record, dataset integrity check, duplicate/near-duplicate audit, seeded split + EDA |
-| 5–6 | Training infrastructure; **BaselineCNN** (~90k params) then five lightweight architectures, one at a time, each evaluated **once** on the sealed test set |
-| 7 | Comparison table (fresh from per-model JSONs) |
-| 8 | Grad-CAM explainability on the best model — correct **and** misclassified cases, with the true→pred confusion profile |
+| 1–4 | Environment record, dataset integrity, duplicate/near-duplicate audit, seeded split + EDA |
+| 5–6 | One honest training loop (AdamW, cosine, early stop on validation macro-F1) applied to **eight models**: a 90k-parameter true-from-scratch baseline; five lightweight ImageNet-initialized architectures; ResNet-50 (the literature's anchor); **Xception-Reference — the "99% club" recipe itself** (ImageNet-pretrained, fully fine-tuned at its native 299×299) |
+| 7 | Comparison (rebuilt fresh from per-model JSONs) |
+| 8 | Grad-CAM on the best model — correct + misclassified cases, with the failure profile |
 | 9 | ONNX export + parity verification (logits must match PyTorch to ~1e-5) |
-| 10 | Inference speed on the training GPU (warmup, median of 100/30 timed iterations) |
-| 11 | **Clean-subset evaluation** — re-score all models on the 438 leak-free test images |
-| 12 | **Seed stability** — best model re-trained at seeds 43/44; reported as mean ± std |
-| 13 | SUMMARY.md assembled from the stage records only (no recomputation) |
+| 10 | Inference speed on the T4 (warmup, medians, synchronized timing) |
+| 11 | **Clean-subset evaluation** — re-score all 8 models on the 438 uncontaminated test images, per class |
+| 12 | **Seed stability** — best model × 3 seeds, mean ± std |
+| 13 | **Family-disjoint re-split** — dual-evidence families, whole-family stratified re-split, **all 8 models retrained from zero**, scored on the 1,440-image exam where leakage is structurally impossible |
+| 14 | **Ensemble** of the five lightweights (softmax-vote), scored on all three exams |
+| 15 | SUMMARY.md assembled from the records only |
 
-All five architectures start from ImageNet-initialized weights (standard transfer learning) and are fine-tuned under an identical recipe — AdamW, cosine schedule, early stopping on validation macro-F1, batch 16, seed 42 — so the comparison measures architecture, not training budget. The only truly from-scratch model is the 90k-parameter BaselineCNN, which doubles as the no-pretraining floor: 64% vs 95%+ says pretraining matters far more than architecture on this benchmark.
+## Results — one project, three exams
 
-## Results
+**Tier 1 — the official benchmark** (1,600 images, as shipped):
 
-**Model comparison** (sealed 1,600-image test set, one evaluation per model):
-
-| Model | Type | Params | Accuracy | Macro-F1 |
-|---|---|---|---|---|
-| **EfficientNet-B0** | CNN | 4.0M | **96.31%** | **0.9626** |
-| TinyViT-5M | ViT | 5.1M | 95.50% | 0.9541 |
-| MobileNetV3-Small | CNN | 1.5M | 95.44% | 0.9536 |
-| DeiT-Tiny | ViT | 5.5M | 95.19% | 0.9509 |
-| MobileViT-S | Hybrid | 4.9M | 95.00% | 0.9489 |
-| Baseline-CNN | CNN | 0.09M | 64.06% | 0.6354 |
-
-The baseline answers the "do you even need these models?" question: a 90k-parameter CNN gets 64%, the real architectures get 95%+ — the complexity is justified. (On a benchmark this leaked, even 64% for a tiny CNN is a data point about the benchmark.)
-
-**The headline — dual metrics** (same models, leak-free test subset):
-
-| Model | Full test set (1,600) | Clean subset (438) | Leakage premium |
+| Model | Params | Official acc | Macro-F1 |
 |---|---|---|---|
-| **EfficientNet-B0** | 96.31% | **89.50%** | **−6.81 pp** |
-| MobileNetV3-Small | 95.44% | 87.21% | −8.22 pp |
-| TinyViT-5M | 95.50% | 86.99% | −8.51 pp |
-| MobileViT-S | 95.00% | 86.53% | −8.47 pp |
-| DeiT-Tiny | 95.19% | 86.30% | −8.89 pp |
-| Baseline-CNN | 64.06% | 55.48% | −8.58 pp |
+| **TinyViT-5M** (best; 3-seed: **95.79 ± 0.28**) | 5.1M | **96.12%** | 0.9607 |
+| DeiT-Tiny | 5.5M | 95.38% | 0.9533 |
+| ResNet-50 | 23.5M | 95.25% | 0.9519 |
+| MobileViT-S | 4.9M | 95.19% | 0.9513 |
+| **Xception-Reference (the "99%" recipe)** | 20.8M | **95.19%** | 0.9510 |
+| EfficientNet-B0 | 4.0M | 95.19% | 0.9509 |
+| MobileNetV3-Small | 1.5M | 95.12% | 0.9507 |
+| Baseline-CNN (true from-scratch) | 0.09M | 65.81% | 0.6515 |
 
-Every architecture loses 7–9 points once the test set stops containing patients it studied. The ranking survives (EfficientNet-B0 stays best), but the *level* everyone quotes does not.
+All seven real models inside **1.0 point**. The famous recipe does not reproduce its 99 — that number requires the weak protocol (minimal augmentation, 10 epochs, no per-class analysis) *plus* the leak.
 
-**Seed stability** (best model, 3 seeds): **95.92% ± 0.28 pp** (96.31 / 95.75 / 95.69). The headline number was the lucky seed — which is exactly why one seed is not a result.
+**Tiers 2 and 3 — the same eight models, honest exams:**
 
-**Explainability & error analysis:** Grad-CAM on the best model (correct + failure cases, [figure](results/plots/EfficientNet-B0_gradcam.png)) shows the model attending to tumor regions, and the failure profile is clinically sensible: errors concentrate in **glioma→meningioma (30)** and **glioma→notumor (18)** — glioma being genuinely the hardest of the four classes to distinguish.
+| Model | Official | Clean remnant (438) | Family-disjoint (1,440) |
+|---|---|---|---|
+| TinyViT-5M | 96.12% | **88.81%** | 95.97% |
+| EfficientNet-B0 | 95.19% | 86.76% | 96.18% |
+| ResNet-50 | 95.25% | 87.21% | 94.51% |
+| Xception-Reference | 95.19% | 86.76% | **97.22%** |
+| MobileViT-S | 95.19% | 86.99% | 96.46% |
+| MobileNetV3-Small | 95.12% | 86.76% | 95.14% |
+| DeiT-Tiny | 95.38% | 86.53% | 94.44% |
+| Baseline-CNN | 65.81% | 57.53% | 65.49% |
+| *Ensemble of five* | *95.88%* | *87.44%* | *97.29%* |
 
-**Inference speed** (Tesla T4, median): MobileNetV3-Small 0.35 ms/image at batch 16 (**~2,880 img/s**); EfficientNet-B0 8.2 ms at batch 1 (122 img/s); the baseline 0.97 ms. ONNX exports verified against PyTorch to max |Δlogit| of 6.5e-05 / 4.2e-05 (PASS).
+**How to read the three tiers — the project's central finding:**
+
+1. **The fair family-disjoint exam (tier 3) shows the models genuinely generalize at ~95–97%** — most score *at or above* their official marks, in line with published patient-disjoint results (SSRN 97.5, Bassi 95.2, WICA-Net 95.25). For an honest protocol the leak adds little.
+2. **The strictly de-contaminated remnant (tier 2) is systematically *harder* — 7–9 points lower for everyone.** This is not contradiction; it is selection bias made visible: the benchmark's contaminated images are precisely the ones covering its hard core (the notumor test class was 90% contaminated — only 40 of 400 images survive de-contamination). Naive de-contamination therefore *underestimates* skill; the family-disjoint re-split is the fair way to measure.
+3. **The leak's real victims are the claims, not the models:** it converts weak protocols into 99% headlines (memorization), masks the benchmark's hard core, and compresses architecture differences into noise (below).
+
+**Per-class honesty (best model):** glioma recall falls from 0.868 (official) to **0.729** on the clean remnant — the glioma advantage was partly memorization — while notumor stays at 1.00 (only 40 survive) and meningioma/pituitary hold at 0.97–0.99. The Grad-CAM failure profile agrees: errors concentrate in glioma→meningioma (37) and glioma→notumor (14), the distinctions clinicians also find hardest.
+
+**The ensemble buys nothing — saturation quantified:** softmax-voting five models together scores 95.88% official (**below** the best single model), 87.44% clean (**below** the best single), 97.29% disjoint (within the band). When five diverse architectures plus their vote all land in the same 1-point band, the benchmark is saturated: what's left is not reachable by model choice.
+
+**Inference speed (T4, batch-1 median):** Baseline 0.96 ms; DeiT-Tiny 6.1 ms; MobileNetV3-Small 6.3 ms; ResNet-50 6.7 ms; Xception-Reference 8.6 ms; EfficientNet-B0 9.4 ms; TinyViT-5M and MobileViT-S 10.1 ms. ONNX exports verified against PyTorch to ≤1.2e-4 max logit difference (PASS).
 
 ## Honest limitations
 
 - **Research prototype — not for clinical use.** No external, multi-institution, or prospective validation.
-- The clean subset is a *best-effort* honest split, not a guarantee: perceptual hashing can miss same-patient slices and patient IDs are not available in this dataset, so a true patient-level split is impossible here. The 89.5% is an estimate of unseen-patient accuracy, with the same caveat the full metric carries — only smaller.
-- Per-image accuracy ≠ per-patient accuracy: a scan with 20 slices counts as 20 correct predictions in this benchmark's unit of measurement.
-- Single dataset edition (Version 2, Feb 2026); results are not comparable to any number produced on Version 1 (2021).
+- The family-disjoint tier is leak-proof w.r.t. **dual-evidence families** (pHash ≤ 8 *and* embedding cosine ≥ 0.95 — the published standard for this dataset); weaker same-patient similarity could in principle survive it. The clean remnant is the strict bound, the fair exam the best estimate.
+- The clean remnant is selection-biased (documented above) — it is a *pessimistic* bound, not an estimate.
+- Per-image accuracy ≠ per-patient accuracy; patient IDs do not exist in this dataset, so a true patient-level split is impossible — the family clustering is the best available proxy and is disclosed in full.
+- Single dataset edition (Version 2, Feb 2026); results are not comparable to numbers produced on Version 1 (2021) — including the original project's 99.31%.
+- Run-to-run GPU nondeterminism moves individual scores by ~±0.3 pp (measured: 3 seeds); the *conclusions* are stable across two independent full runs.
 
 ## Related work
 
-**On this exact dataset family:** ["Near-Duplicate Leakage in Brain Tumor MRI Classification" (Zhang et al., SSRN 2025)](https://doi.org/10.2139/ssr.7493561) found a near-duplicate training counterpart for **68.8% (1,100/1,600)** of this dataset's test images, with ResNet-18 scoring **99.73% on matched vs 85.40% on unmatched** test images — a 14.3-point gap; this project's independent audit (**73%**, 96.31% → 89.50%) replicates their finding. MDPI's [WICA-Net-M paper](https://doi.org/10.3390/computers15090586) reports 99.42 ± 0.16% on the standard split vs **95.25 ± 0.32% on a deduplicated split**, notes that "patient-level leakage remains unresolved because patient identifiers are unavailable", and calls leakage-aware multi-seed evaluation the standard — the protocol this project follows.
-
-**The 99% club this project does not chase:** 99.86% (VGG16, [arXiv 2509.24149](https://arxiv.org/abs/2509.24149)), 99.62% ([arXiv 2411.15596](https://arxiv.org/abs/2411.15596)), 98.73% (Xception, [Cancers 2025](https://doi.org/10.3390/cancers17010121)), 98.6% ([Front. Neuroinform. 2024](https://doi.org/10.3389/fninf.2024.1414925)) — all single-split numbers on data whose test set is 69–78% patient-shared with train.
-
-**The broader audit tradition this project borrows its tone from:** ["Do ImageNet Classifiers Generalize to ImageNet?" (Recht et al., ICML 2019)](https://arxiv.org/abs/1902.10811) (accuracy drops 11–15% on a faithful re-collection, but model *rankings* survive — as they do here), ["Do We Train on Test Data? Purging CIFAR of Near-Duplicates" (Barz & Denzler, 2020)](https://arxiv.org/abs/1902.00423) (the ciFAIR precedent: de-duplicate the benchmark, re-measure, ship it), and ["Pervasive Label Errors in Test Sets" (Northcutt et al., NeurIPS 2021)](https://arxiv.org/abs/2103.14749).
+- Zhang, Xu, Qin & Li — *Near-Duplicate Leakage in Brain Tumor MRI Classification: Cluster-Disjoint Re-Evaluation* ([SSRN, DOI 10.2139/ssrn.7493561](https://doi.org/10.2139/ssrn.7493561)): 68.8% test-side near-duplicates; ResNet-18 scores 99.73% on matched vs 85.40% on unmatched test images; cluster-disjoint best 0.9748. **This project independently replicates their leakage rate (73% vs 68.8%) and their disjoint tier (95–97%).**
+- Bassi — *Brain Tumor MRI Benchmark Audit* ([Zenodo 22721030](https://zenodo.org/records/22721030), [code](https://github.com/imjbassi/brain-tumor-mri-classification)): patient mapping of this dataset's Figshare lineage; patient-disjoint CV 99.22% → 95.19%; exact-dedup alone changes nothing.
+- Khan et al. — WICA-Net-M, *Computers* 15(9):586 ([DOI](https://doi.org/10.3390/computers15090586)): 99.42% standard vs 95.25% deduplicated; "patient-level leakage remains unresolved."
+- The 99% club on the older Version-1 split: 99.86% ([arXiv 2509.24149](https://arxiv.org/abs/2509.24149)), 99.62% ([arXiv 2411.15596](https://arxiv.org/abs/2411.15596)), 98.73% (*Cancers* 2025, [DOI](https://doi.org/10.3390/cancers17010121)).
+- The audit tradition this project follows: Recht et al., *Do ImageNet Classifiers Generalize to ImageNet?* ([arXiv 1902.10811](https://arxiv.org/abs/1902.10811)); Barz & Denzler, *Purging CIFAR of Near-Duplicates* ([arXiv 1902.00423](https://arxiv.org/abs/1902.00423)); Northcutt et al., *Pervasive Label Errors* ([arXiv 2103.14749](https://arxiv.org/abs/2103.14749)).
 
 ## How to reproduce
 
-Everything ran on a single Kaggle Tesla T4 in **~2 hours** (notebook: [notebooks/brain_tumor_mri_v2_t4.ipynb](notebooks/brain_tumor_mri_v2_t4.ipynb) — the actual executed run, outputs included):
-
-1. On Kaggle: create a notebook with GPU enabled, attach the `masoudnickparvar/brain-tumor-mri-dataset` input, upload the notebook, **Save & Run All**. (To guarantee bit-identical data, use the pinned snapshot ZIP from the Release instead — see [data/DATASET_SNAPSHOT.md](data/DATASET_SNAPSHOT.md).) The prep cell installs `grad-cam`/`onnx`/`onnxruntime` and links the dataset; every stage is idempotent and resumable.
-2. Environment: see [requirements.txt](requirements.txt) (recorded from the actual run: Python 3.12, torch 2.10.0+cu128, timm 1.0.26, scikit-learn 1.6.1).
-
-**Trained weights** (all six models + the two seed variants, ~100 MB) and the **pinned dataset snapshot ZIP** (167.8 MB, checksummed in [data/file_hashes.csv](data/file_hashes.csv)) are attached to this repository's GitHub *Release* rather than committed to git — see the Releases page. The dataset author may update the data at any time; the Release snapshot + `data/DATASET_SNAPSHOT.md` fix exactly what this project used, so its numbers stay verifiable regardless.
+Everything ran on a single Kaggle Tesla T4 in **~8 hours**, executed top-to-bottom with GPU enabled and the dataset attached ([notebooks/brain_tumor_mri.ipynb](notebooks/brain_tumor_mri.ipynb) is the actual executed run, outputs included — also [live on Kaggle](https://www.kaggle.com/code/rishabarya810/brain-tumor-mri-why-99-is-a-leak-73-audit)). The stage-gated design makes the whole notebook re-runnable without recomputing anything. Environment: [requirements.txt](requirements.txt), recorded from the run (Python 3.13, torch 2.10.0+cu128, timm 1.0.26). **Trained weights** (all 16 trainings: official + seed variants + family-disjoint) and the **pinned dataset snapshot** are attached to the GitHub *Release*; the repo's checksums verify both.
 
 ## Repository map
 
-The [CHANGELOG](CHANGELOG.md) records how this project evolved — four iterations, each existing because the previous one taught us something (it is also the short version of the audit story).
-
 ```
 ├── README.md                     this file
-├── CHANGELOG.md                  four iterations, each existing because the previous one taught us something
+├── CHANGELOG.md                  the project's evolution: v1 → v8 → this run
 ├── requirements.txt              pinned environment recorded from the actual run
-├── data/
-│   ├── DATASET_SNAPSHOT.md       the exact dataset this project used — pinned forever
-│   └── file_hashes.csv           MD5 checksums of all 7,200 files
-│       (the image folder itself is kept out of git; the snapshot ZIP
-│        ships as a GitHub Release asset)
 ├── notebooks/
-│   └── brain_tumor_mri_v2_t4.ipynb    the full pipeline — as executed on the T4
+│   └── brain_tumor_mri.ipynb    the full pipeline — as executed on the T4 (32 stages)
+├── data/                         pinned dataset snapshot: card + SHA-256 manifest
+│   └── LICENSES/                 CC BY 4.0 text + TASL attribution
 └── results/                      every artifact the run produced
     ├── SUMMARY.md                the run's self-written report
     ├── model_comparison.csv · benchmarks.csv · clean_subset_report.json
-    ├── seed_stability.json · data_quality.json · environment.json
+    ├── cluster_report.json · ensemble_report.json · seed_stability.json
+    ├── data_quality.json · environment.json · split.json
     └── plots/                    EDA, confusion matrices, ROC, training curves, Grad-CAM
 ```
 
 ## Credits & license
 
-- Dataset: [Brain Tumor MRI Dataset](https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset) by Masoud Nickparvar — **CC BY 4.0**; underlying sources: Figshare (Cheng et al.), SARTAJ, Br35H.
+- Dataset: [Brain Tumor MRI Dataset](https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset) by Masoud Nickparvar — **CC BY 4.0** (full attribution in [data/LICENSES/THIRD-PARTY-NOTICES.md](data/LICENSES/THIRD-PARTY-NOTICES.md)); underlying sources: Figshare (Cheng et al.), SARTAJ, Br35H.
 - Code: MIT (see [LICENSE](LICENSE)).
 - Built by Rishab Arya · M.Tech CSE (Data Science), Bennett University.

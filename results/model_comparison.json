@@ -1,0 +1,90 @@
+[
+  {
+    "Model": "TinyViT-5M",
+    "Type": "ViT",
+    "Params (M)": 5.07,
+    "Size (MB)": 20.29,
+    "Accuracy (%)": 96.12,
+    "Macro-F1": 0.9607,
+    "Macro-P": 0.963,
+    "Macro-R": 0.9613,
+    "Best epoch": 23
+  },
+  {
+    "Model": "DeiT-Tiny",
+    "Type": "ViT",
+    "Params (M)": 5.53,
+    "Size (MB)": 22.1,
+    "Accuracy (%)": 95.38,
+    "Macro-F1": 0.9533,
+    "Macro-P": 0.9567,
+    "Macro-R": 0.9538,
+    "Best epoch": 24
+  },
+  {
+    "Model": "ResNet-50",
+    "Type": "CNN",
+    "Params (M)": 23.52,
+    "Size (MB)": 94.06,
+    "Accuracy (%)": 95.25,
+    "Macro-F1": 0.9519,
+    "Macro-P": 0.9556,
+    "Macro-R": 0.9525,
+    "Best epoch": 27
+  },
+  {
+    "Model": "MobileViT-S",
+    "Type": "Hybrid ViT",
+    "Params (M)": 4.94,
+    "Size (MB)": 19.76,
+    "Accuracy (%)": 95.19,
+    "Macro-F1": 0.9513,
+    "Macro-P": 0.9548,
+    "Macro-R": 0.9519,
+    "Best epoch": 26
+  },
+  {
+    "Model": "Xception-Reference",
+    "Type": "CNN",
+    "Params (M)": 20.82,
+    "Size (MB)": 83.26,
+    "Accuracy (%)": 95.19,
+    "Macro-F1": 0.951,
+    "Macro-P": 0.9555,
+    "Macro-R": 0.9519,
+    "Best epoch": 14
+  },
+  {
+    "Model": "EfficientNet-B0",
+    "Type": "CNN",
+    "Params (M)": 4.01,
+    "Size (MB)": 16.05,
+    "Accuracy (%)": 95.19,
+    "Macro-F1": 0.9509,
+    "Macro-P": 0.9555,
+    "Macro-R": 0.9519,
+    "Best epoch": 14
+  },
+  {
+    "Model": "MobileNetV3-Small",
+    "Type": "CNN",
+    "Params (M)": 1.52,
+    "Size (MB)": 6.09,
+    "Accuracy (%)": 95.12,
+    "Macro-F1": 0.9507,
+    "Macro-P": 0.9521,
+    "Macro-R": 0.9512,
+    "Best epoch": 19
+  },
+  {
+    "Model": "Baseline-CNN",
+    "Type": "CNN",
+    "Params (M)": 0.09,
+    "Size (MB)": 0.38,
+    "Accuracy (%)": 65.81,
+    "Macro-F1": 0.6515,
+    "Macro-P": 0.6549,
+    "Macro-R": 0.6581,
+    "Best epoch": 20
+  }
+]

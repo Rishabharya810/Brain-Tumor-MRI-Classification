@@ -1,0 +1,70 @@
+{
+  "rule": "families never cross the split; dual-evidence links (pHash<=8 AND cosine>=0.95)",
+  "n_test": 1440,
+  "rows": [
+    {
+      "Model": "Baseline-CNN",
+      "Official split acc (%)": 65.81,
+      "Disjoint acc (%)": 65.49,
+      "Official macro-F1": 0.6515,
+      "Disjoint macro-F1": 0.6528,
+      "Disjoint n": 1440
+    },
+    {
+      "Model": "EfficientNet-B0",
+      "Official split acc (%)": 95.19,
+      "Disjoint acc (%)": 96.18,
+      "Official macro-F1": 0.9509,
+      "Disjoint macro-F1": 0.9619,
+      "Disjoint n": 1440
+    },
+    {
+      "Model": "MobileNetV3-Small",
+      "Official split acc (%)": 95.12,
+      "Disjoint acc (%)": 95.14,
+      "Official macro-F1": 0.9507,
+      "Disjoint macro-F1": 0.9514,
+      "Disjoint n": 1440
+    },
+    {
+      "Model": "MobileViT-S",
+      "Official split acc (%)": 95.19,
+      "Disjoint acc (%)": 96.46,
+      "Official macro-F1": 0.9513,
+      "Disjoint macro-F1": 0.9646,
+      "Disjoint n": 1440
+    },
+    {
+      "Model": "DeiT-Tiny",
+      "Official split acc (%)": 95.38,
+      "Disjoint acc (%)": 94.44,
+      "Official macro-F1": 0.9533,
+      "Disjoint macro-F1": 0.9445,
+      "Disjoint n": 1440
+    },
+    {
+      "Model": "TinyViT-5M",
+      "Official split acc (%)": 96.12,
+      "Disjoint acc (%)": 95.97,
+      "Official macro-F1": 0.9607,
+      "Disjoint macro-F1": 0.9596,
+      "Disjoint n": 1440
+    },
+    {
+      "Model": "ResNet-50",
+      "Official split acc (%)": 95.25,
+      "Disjoint acc (%)": 94.51,
+      "Official macro-F1": 0.9519,
+      "Disjoint macro-F1": 0.9446,
+      "Disjoint n": 1440
+    },
+    {
+      "Model": "Xception-Reference",
+      "Official split acc (%)": 95.19,
+      "Disjoint acc (%)": 97.22,
+      "Official macro-F1": 0.951,
+      "Disjoint macro-F1": 0.9723,
+      "Disjoint n": 1440
+    }
+  ]
+}
