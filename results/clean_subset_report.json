@@ -1,60 +1,180 @@
 {
   "clean_test_images": 438,
   "dirty_test_images": 1162,
+  "clean_class_composition": {
+    "glioma": 166,
+    "meningioma": 114,
+    "notumor": 40,
+    "pituitary": 118
+  },
   "near_duplicate_rule": "pHash Hamming<=8 vs actual training split",
   "rows": [
     {
       "Model": "Baseline-CNN",
-      "Full test acc (%)": 64.06,
-      "Clean subset acc (%)": 55.48,
-      "Drop (pp)": 8.58,
-      "Full macro-F1": 0.6354,
-      "Clean macro-F1": 0.5498,
+      "Full test acc (%)": 65.81,
+      "Clean subset acc (%)": 57.53,
+      "Drop (pp)": 8.28,
+      "Full macro-F1": 0.6515,
+      "Clean macro-F1": 0.5683,
+      "Full per-class recall": [
+        0.55,
+        0.4775,
+        0.8125,
+        0.7925
+      ],
+      "Clean per-class recall": {
+        "glioma": 0.3674698795180723,
+        "meningioma": 0.4824561403508772,
+        "notumor": 0.875,
+        "pituitary": 0.8559322033898306
+      },
       "Clean n": 438
     },
     {
       "Model": "EfficientNet-B0",
-      "Full test acc (%)": 96.31,
-      "Clean subset acc (%)": 89.5,
-      "Drop (pp)": 6.81,
-      "Full macro-F1": 0.9626,
-      "Clean macro-F1": 0.8877,
+      "Full test acc (%)": 95.19,
+      "Clean subset acc (%)": 86.76,
+      "Drop (pp)": 8.43,
+      "Full macro-F1": 0.9509,
+      "Clean macro-F1": 0.8727,
+      "Full per-class recall": [
+        0.8275,
+        0.985,
+        1.0,
+        0.995
+      ],
+      "Clean per-class recall": {
+        "glioma": 0.6807228915662651,
+        "meningioma": 0.9736842105263158,
+        "notumor": 1.0,
+        "pituitary": 0.9830508474576272
+      },
       "Clean n": 438
     },
     {
       "Model": "MobileNetV3-Small",
-      "Full test acc (%)": 95.44,
-      "Clean subset acc (%)": 87.21,
-      "Drop (pp)": 8.22,
-      "Full macro-F1": 0.9536,
-      "Clean macro-F1": 0.8685,
+      "Full test acc (%)": 95.12,
+      "Clean subset acc (%)": 86.76,
+      "Drop (pp)": 8.37,
+      "Full macro-F1": 0.9507,
+      "Clean macro-F1": 0.8584,
+      "Full per-class recall": [
+        0.8675,
+        0.955,
+        1.0,
+        0.9825
+      ],
+      "Clean per-class recall": {
+        "glioma": 0.7048192771084337,
+        "meningioma": 0.956140350877193,
+        "notumor": 1.0,
+        "pituitary": 0.9661016949152542
+      },
       "Clean n": 438
     },
     {
       "Model": "MobileViT-S",
-      "Full test acc (%)": 95.0,
-      "Clean subset acc (%)": 86.53,
-      "Drop (pp)": 8.47,
-      "Full macro-F1": 0.9489,
-      "Clean macro-F1": 0.856,
+      "Full test acc (%)": 95.19,
+      "Clean subset acc (%)": 86.99,
+      "Drop (pp)": 8.2,
+      "Full macro-F1": 0.9513,
+      "Clean macro-F1": 0.868,
+      "Full per-class recall": [
+        0.8475,
+        0.98,
+        0.995,
+        0.985
+      ],
+      "Clean per-class recall": {
+        "glioma": 0.6927710843373494,
+        "meningioma": 0.9736842105263158,
+        "notumor": 1.0,
+        "pituitary": 0.9745762711864406
+      },
       "Clean n": 438
     },
     {
       "Model": "DeiT-Tiny",
-      "Full test acc (%)": 95.19,
-      "Clean subset acc (%)": 86.3,
-      "Drop (pp)": 8.89,
-      "Full macro-F1": 0.9509,
-      "Clean macro-F1": 0.851,
+      "Full test acc (%)": 95.38,
+      "Clean subset acc (%)": 86.53,
+      "Drop (pp)": 8.85,
+      "Full macro-F1": 0.9533,
+      "Clean macro-F1": 0.8561,
+      "Full per-class recall": [
+        0.8575,
+        0.9875,
+        1.0,
+        0.97
+      ],
+      "Clean per-class recall": {
+        "glioma": 0.7048192771084337,
+        "meningioma": 0.9824561403508771,
+        "notumor": 1.0,
+        "pituitary": 0.9322033898305084
+      },
       "Clean n": 438
     },
     {
       "Model": "TinyViT-5M",
-      "Full test acc (%)": 95.5,
-      "Clean subset acc (%)": 86.99,
-      "Drop (pp)": 8.51,
-      "Full macro-F1": 0.9541,
-      "Clean macro-F1": 0.8581,
+      "Full test acc (%)": 96.12,
+      "Clean subset acc (%)": 88.81,
+      "Drop (pp)": 7.31,
+      "Full macro-F1": 0.9607,
+      "Clean macro-F1": 0.8857,
+      "Full per-class recall": [
+        0.8675,
+        0.9825,
+        1.0,
+        0.995
+      ],
+      "Clean per-class recall": {
+        "glioma": 0.7289156626506024,
+        "meningioma": 0.9736842105263158,
+        "notumor": 1.0,
+        "pituitary": 0.9915254237288136
+      },
+      "Clean n": 438
+    },
+    {
+      "Model": "ResNet-50",
+      "Full test acc (%)": 95.25,
+      "Clean subset acc (%)": 87.21,
+      "Drop (pp)": 8.04,
+      "Full macro-F1": 0.9519,
+      "Clean macro-F1": 0.8703,
+      "Full per-class recall": [
+        0.845,
+        0.9825,
+        1.0,
+        0.9825
+      ],
+      "Clean per-class recall": {
+        "glioma": 0.6927710843373494,
+        "meningioma": 0.9912280701754386,
+        "notumor": 1.0,
+        "pituitary": 0.9661016949152542
+      },
+      "Clean n": 438
+    },
+    {
+      "Model": "Xception-Reference",
+      "Full test acc (%)": 95.19,
+      "Clean subset acc (%)": 86.76,
+      "Drop (pp)": 8.43,
+      "Full macro-F1": 0.951,
+      "Clean macro-F1": 0.8689,
+      "Full per-class recall": [
+        0.83,
+        0.9875,
+        0.9975,
+        0.9925
+      ],
+      "Clean per-class recall": {
+        "glioma": 0.6566265060240963,
+        "meningioma": 1.0,
+        "notumor": 1.0,
+        "pituitary": 0.9915254237288136
+      },
       "Clean n": 438
     }
   ]
