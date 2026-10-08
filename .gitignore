@@ -4,3 +4,4 @@ __pycache__/
 *.onnx
 data/Brain_tumor_MRI_Dataset/
 results/models/
+_release/
