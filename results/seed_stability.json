@@ -1,27 +1,27 @@
 {
-  "best_model": "TinyViT-5M",
+  "best_model": "EfficientNet-B0",
   "runs": [
     {
-      "run": "TinyViT-5M",
+      "run": "EfficientNet-B0",
       "seed": 42,
-      "test acc (%)": 96.12,
-      "macro-F1": 0.9607
+      "test acc (%)": 96.06,
+      "macro-F1": 0.9601
     },
     {
-      "run": "TinyViT-5M_s43",
+      "run": "EfficientNet-B0_s43",
       "seed": 43,
-      "test acc (%)": 95.44,
-      "macro-F1": 0.9533
+      "test acc (%)": 96.0,
+      "macro-F1": 0.9596
     },
     {
-      "run": "TinyViT-5M_s44",
+      "run": "EfficientNet-B0_s44",
       "seed": 44,
-      "test acc (%)": 95.81,
-      "macro-F1": 0.9575
+      "test acc (%)": 95.88,
+      "macro-F1": 0.9581
     }
   ],
-  "acc_mean": 95.79,
-  "acc_std_pp": 0.2779688231918612,
-  "f1_mean": 0.9571666666666667,
-  "f1_std": 0.0030302181806302546
+  "acc_mean": 95.98,
+  "acc_std_pp": 0.07483314773548166,
+  "f1_mean": 0.9592666666666666,
+  "f1_std": 0.0008498365855988055
 }
