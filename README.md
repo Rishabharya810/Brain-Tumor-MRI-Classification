@@ -2,9 +2,9 @@
 
 Four-class brain-tumor MRI classification (glioma / meningioma / no tumor / pituitary) on the most-used public dataset for this task — built as an honest pipeline that audits its own benchmark, then scores every model **three ways**: the official benchmark, its strictly de-contaminated remnant, and a **family-disjoint re-split** (re-drawn so the same patient's scans can never appear on both sides) with every model retrained from zero.
 
-**The short version:** eight models trained under one honest protocol land within **one point** of each other (95.1–96.1%) on the official 1,600-image test — including **the exact recipe behind the famous "99% accuracy" notebook** (ImageNet-pretrained Xception, fully fine-tuned), which scores **95.19% here, not 99**. The audit shows why: **73% of the test images share a perceptual hash with the training split** (same patients on both sides). On the 438-image uncontaminated remnant every model drops 7–9 points (best: 88.8%); on the fair family-disjoint exam most models score *at or above* their official marks (94.4–97.2%), matching published patient-disjoint results. The leak's real damage is not inflating good models — it's letting weak protocols fake 99 while hiding the benchmark's hard core. An ensemble of five models gains nothing anywhere (more saturation evidence), and the best model is stable across three seeds (95.79 ± 0.28).
+**The short version:** eight models trained under one honest protocol land within **3 points** of each other (92.9–96.1%) on the official 1,600-image test — including **the exact recipe behind the famous "99% accuracy" notebook** (ImageNet-pretrained Xception, fully fine-tuned), which scores **95.88% here, not 99**. The audit shows why: **73% of the test images share a perceptual hash with the training split** (same patients on both sides). On the 438-image uncontaminated remnant every model drops 8–10 points (best: 88.1%); on the fair family-disjoint exam most models score *at or above* their official marks (94.9–97.1%), matching published patient-disjoint results. The leak's real damage is not inflating good models — it's letting weak protocols fake 99 while hiding the benchmark's hard core. An ensemble of five models gains nothing anywhere (more saturation evidence), and the best model is stable across three seeds (95.98 ± 0.07). **In an independent earlier run, the best model was TinyViT-5M (96.12%) — the flip to EfficientNet-B0 (96.06%) across runs is itself a saturation finding.**
 
-> **Headline: the famous 99% is a protocol artifact. Under an honest protocol the same recipe scores 95.19. Models genuinely generalize at 95–97% — but only the audit can tell you which part of any score is memory.**
+> **Headline: the famous 99% is a protocol artifact. Under an honest protocol the same recipe scores 95.88. Models genuinely generalize at 95–97% — but only the audit can tell you which part of any score is memory.**
 
 ---
 
@@ -55,42 +55,44 @@ Every stage writes its artifacts and marks itself complete in a manifest; re-run
 
 | Model | Params | Official acc | Macro-F1 |
 |---|---|---|---|
-| **TinyViT-5M** (best; 3-seed: **95.79 ± 0.28**) | 5.1M | **96.12%** | 0.9607 |
-| DeiT-Tiny | 5.5M | 95.38% | 0.9533 |
-| ResNet-50 | 23.5M | 95.25% | 0.9519 |
-| MobileViT-S | 4.9M | 95.19% | 0.9513 |
-| **Xception-Reference (the "99%" recipe)** | 20.8M | **95.19%** | 0.9510 |
-| EfficientNet-B0 | 4.0M | 95.19% | 0.9509 |
-| MobileNetV3-Small | 1.5M | 95.12% | 0.9507 |
-| Baseline-CNN (true from-scratch) | 0.09M | 65.81% | 0.6515 |
+| **EfficientNet-B0** (best; 3-seed: **95.98 ± 0.07**) | 4.0M | **96.06%** | 0.9601 |
+| **Xception-Reference (the "99%" recipe)** | 20.8M | **95.88%** | 0.9582 |
+| DeiT-Tiny | 5.5M | 95.50% | 0.9543 |
+| TinyViT-5M | 5.1M | 95.19% | 0.9510 |
+| MobileViT-S | 4.9M | 94.88% | 0.9480 |
+| MobileNetV3-Small | 1.5M | 94.31% | 0.9423 |
+| ResNet-50 | 23.5M | 92.94% | 0.9285 |
+| Baseline-CNN (true from-scratch) | 0.09M | 65.25% | 0.6460 |
 
-All seven real models inside **1.0 point**. The famous recipe does not reproduce its 99 — that number requires the weak protocol (minimal augmentation, 10 epochs, no per-class analysis) *plus* the leak.
+All seven real models inside **3.1 points**. The famous recipe does not reproduce its 99 — that number requires the weak protocol (minimal augmentation, 10 epochs, no per-class analysis) *plus* the leak.
 
 **Tiers 2 and 3 — the same eight models, honest exams:**
 
 | Model | Official | Clean remnant (438) | Family-disjoint (1,440) |
 |---|---|---|---|
-| TinyViT-5M | 96.12% | **88.81%** | 95.97% |
-| EfficientNet-B0 | 95.19% | 86.76% | 96.18% |
-| ResNet-50 | 95.25% | 87.21% | 94.51% |
-| Xception-Reference | 95.19% | 86.76% | **97.22%** |
-| MobileViT-S | 95.19% | 86.99% | 96.46% |
-| MobileNetV3-Small | 95.12% | 86.76% | 95.14% |
-| DeiT-Tiny | 95.38% | 86.53% | 94.44% |
-| Baseline-CNN | 65.81% | 57.53% | 65.49% |
-| *Ensemble of five* | *95.88%* | *87.44%* | *97.29%* |
+| EfficientNet-B0 | 96.06% | **88.13%** | **97.08%** |
+| Xception-Reference | 95.88% | 87.90% | 96.60% |
+| DeiT-Tiny | 95.50% | 86.53% | 95.56% |
+| TinyViT-5M | 95.19% | 86.99% | 96.74% |
+| MobileViT-S | 94.88% | 86.07% | 95.21% |
+| MobileNetV3-Small | 94.31% | 84.47% | 94.86% |
+| ResNet-50 | 92.94% | 84.02% | 95.49% |
+| Baseline-CNN | 65.25% | 56.62% | 66.46% |
+| *Ensemble of five* | *95.81%* | *87.90%* | *97.50%* |
 
 **How to read the three tiers — the project's central finding:**
 
 1. **The fair family-disjoint exam (tier 3) shows the models genuinely generalize at ~95–97%** — most score *at or above* their official marks, in line with published patient-disjoint results (SSRN 97.5, Bassi 95.2, WICA-Net 95.25). For an honest protocol the leak adds little.
-2. **The strictly de-contaminated remnant (tier 2) is systematically *harder* — 7–9 points lower for everyone.** This is not contradiction; it is selection bias made visible: the benchmark's contaminated images are precisely the ones covering its hard core (the notumor test class was 90% contaminated — only 40 of 400 images survive de-contamination). Naive de-contamination therefore *underestimates* skill; the family-disjoint re-split is the fair way to measure.
+2. **The strictly de-contaminated remnant (tier 2) is systematically *harder* — 8–10 points lower for everyone.** This is not contradiction; it is selection bias made visible: the benchmark's contaminated images are precisely the ones covering its hard core (the notumor test class was 90% contaminated — only 40 of 400 images survive de-contamination). Naive de-contamination therefore *underestimates* skill; the family-disjoint re-split is the fair way to measure.
 3. **The leak's real victims are the claims, not the models:** it converts weak protocols into 99% headlines (memorization), masks the benchmark's hard core, and compresses architecture differences into noise (below).
 
-**Per-class honesty (best model):** glioma recall falls from 0.868 (official) to **0.729** on the clean remnant — the glioma advantage was partly memorization — while notumor stays at 1.00 (only 40 survive) and meningioma/pituitary hold at 0.97–0.99. The Grad-CAM failure profile agrees: errors concentrate in glioma→meningioma (37) and glioma→notumor (14), the distinctions clinicians also find hardest.
+**Per-class honesty (best model):** glioma recall falls from 0.855 (official) to **0.705** on the clean remnant — the glioma advantage was partly memorization — while notumor stays at 1.00 (only 40 survive) and meningioma/pituitary hold at 0.97–0.99. The Grad-CAM failure profile agrees: errors concentrate in glioma→meningioma (34) and glioma→notumor (18), the distinctions clinicians also find hardest.
 
-**The ensemble buys nothing — saturation quantified:** softmax-voting five models together scores 95.88% official (**below** the best single model), 87.44% clean (**below** the best single), 97.29% disjoint (within the band). When five diverse architectures plus their vote all land in the same 1-point band, the benchmark is saturated: what's left is not reachable by model choice.
+**The ensemble buys nothing — saturation quantified:** softmax-voting five models together scores 95.81% official (**below** the best single model at 96.06%), 87.90% clean (**below** the best single at 88.13%), 97.50% disjoint (within the band). When five diverse architectures plus their vote all land in the same band, the benchmark is saturated: what's left is not reachable by model choice.
 
-**Inference speed (T4, batch-1 median):** Baseline 0.96 ms; DeiT-Tiny 6.1 ms; MobileNetV3-Small 6.3 ms; ResNet-50 6.7 ms; Xception-Reference 8.6 ms; EfficientNet-B0 9.4 ms; TinyViT-5M and MobileViT-S 10.1 ms. ONNX exports verified against PyTorch to ≤1.2e-4 max logit difference (PASS).
+**The best model flips between runs — saturation from yet another angle.** In an independent earlier run (identical code, identical seed, same GPU type), TinyViT-5M won at 96.12% while EfficientNet-B0 scored 95.19%. In this run, EfficientNet-B0 wins at 96.06% and TinyViT-5M scores 95.19%. The ranking is not stable — the models are statistically indistinguishable on this benchmark.
+
+**Inference speed (T4, batch-1 median):** Baseline 0.96 ms; MobileNetV3-Small 5.1 ms; DeiT-Tiny 5.1 ms; ResNet-50 6.0 ms; EfficientNet-B0 7.9 ms; TinyViT-5M 8.3 ms; MobileViT-S and Xception-Reference 8.4 ms. ONNX exports verified against PyTorch to ≤7.3e-5 max logit difference (PASS).
 
 ## Honest limitations
 
@@ -99,7 +101,7 @@ All seven real models inside **1.0 point**. The famous recipe does not reproduce
 - The clean remnant is selection-biased (documented above) — it is a *pessimistic* bound, not an estimate.
 - Per-image accuracy ≠ per-patient accuracy; patient IDs do not exist in this dataset, so a true patient-level split is impossible — the family clustering is the best available proxy and is disclosed in full.
 - Single dataset edition (Version 2, Feb 2026); results are not comparable to numbers produced on Version 1 (2021) — including the original project's 99.31%.
-- Run-to-run GPU nondeterminism moves individual scores by ~±0.3 pp (measured: 3 seeds); the *conclusions* are stable across two independent full runs.
+- Run-to-run GPU nondeterminism moves individual scores by ~±0.3 pp (measured: 3 seeds); the *conclusions* are stable across two independent full runs — but the best-model *label* flipped from TinyViT-5M to EfficientNet-B0 between them (see the results section).
 
 ## Related work
 

@@ -49,6 +49,13 @@ The version that shipped to Kaggle and GitHub: everything below plus the additio
 pessimistic); fair family-disjoint exam 94.4–97.2 — models genuinely generalize, the leak's real damage is converting weak
 protocols into 99% headlines and hiding the benchmark's hard core.
 
+## [Publication run v7 — final numbers] — 2026-10-10
+
+The run that shipped to Kaggle and GitHub (identical code to v5; the H1 title corrected 89.5 → 88.81%).
+GPU nondeterminism shifted individual scores within ±0.8 pp and **flipped the best model** from
+TinyViT-5M (96.12%) to EfficientNet-B0 (96.06%) — itself further evidence of benchmark saturation.
+All three-tier conclusions unchanged. Results in this repo are from v7.
+
 ## [v7] — first complete cloud run — 2026-09-29
 
 First time every stage of the rebuilt pipeline executed end-to-end, on Kaggle (T4), all stages clean.
