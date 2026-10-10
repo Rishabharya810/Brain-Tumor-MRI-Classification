@@ -3,5 +3,6 @@ __pycache__/
 *.pth
 *.onnx
 data/Brain_tumor_MRI_Dataset/
+Brain_tumor_MRI_Dataset/
 results/models/
 _release/
