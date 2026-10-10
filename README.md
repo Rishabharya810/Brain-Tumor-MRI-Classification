@@ -117,7 +117,7 @@ New to deep learning? Every concept and formula used here — splits, cross-entr
 
 Everything ran on a single Kaggle Tesla T4 in **~8 hours**, executed top-to-bottom with GPU enabled and the dataset attached ([notebooks/brain_tumor_mri.ipynb](notebooks/brain_tumor_mri.ipynb) is the actual executed run, outputs included — also [live on Kaggle](https://www.kaggle.com/code/rishabarya810/brain-tumor-mri-why-99-is-a-leak-73-audit), where **Copy & Edit** runs it on your own GPU quota).
 
-**Run it yourself, on your own PC:** [notebooks/brain_tumor_mri_local.ipynb](notebooks/brain_tumor_mri_local.ipynb) is the same pipeline *without outputs* — the clean, runnable version. `pip install -r requirements.txt`, unzip the pinned dataset snapshot (from the [Release](../../releases) — its checksums are in [data/](data/DATASET_SNAPSHOT.md)) next to the notebook, and run top-to-bottom: the prep cell auto-links the dataset (a directory junction on Windows), installs the extra packages, and every stage is idempotent and resumable — interrupt anywhere, re-run, and it continues instead of restarting. The stage-gated design makes the whole notebook re-runnable without recomputing anything. Environment: [requirements.txt](requirements.txt), recorded from the run (Python 3.13, torch 2.10.0+cu128, timm 1.0.26). **Trained weights** (all 18 trainings: 8 official + 2 seed-stability + 8 family-disjoint) and the **pinned dataset snapshot** are attached to the GitHub *Release*; the repo's checksums verify both.
+**Run it yourself, on your own PC:** clear the outputs of [notebooks/brain_tumor_mri.ipynb](notebooks/brain_tumor_mri.ipynb) (Jupyter: *Edit → Clear all outputs* — or **Copy & Edit** on Kaggle for a fresh copy that runs on your own GPU quota). `pip install -r requirements.txt`, unzip the pinned dataset snapshot (from the [Release](../../releases) — its checksums are in [data/](data/DATASET_SNAPSHOT.md)) next to the notebook, and run top-to-bottom: the prep cell auto-links the dataset (a directory junction on Windows), installs the extra packages, and every stage is idempotent and resumable — interrupt anywhere, re-run, and it continues instead of restarting. The stage-gated design makes the whole notebook re-runnable without recomputing anything. Environment: [requirements.txt](requirements.txt), recorded from the run (Python 3.13, torch 2.10.0+cu128, timm 1.0.26). **Trained weights** (all 18 trainings: 8 official + 2 seed-stability + 8 family-disjoint) and the **pinned dataset snapshot** are attached to the GitHub *Release*; the repo's checksums verify both.
 
 ## Repository map
 
@@ -128,8 +128,7 @@ Everything ran on a single Kaggle Tesla T4 in **~8 hours**, executed top-to-bott
 │   └── METHODOLOGY.md            the zero-background reader's layer (every concept + formula)
 ├── requirements.txt              pinned environment recorded from the actual run
 ├── notebooks/
-│   ├── brain_tumor_mri.ipynb        the full pipeline — as executed on the T4 (all outputs included)
-│   └── brain_tumor_mri_local.ipynb  the same code, no outputs — for running it yourself
+│   └── brain_tumor_mri.ipynb        the full pipeline — as executed on the T4 (all outputs included); clear outputs to run it yourself
 ├── data/                         pinned dataset snapshot: card + SHA-256 manifest
 │   └── LICENSES/                 CC BY 4.0 text + TASL attribution
 └── results/                      every artifact the run produced
