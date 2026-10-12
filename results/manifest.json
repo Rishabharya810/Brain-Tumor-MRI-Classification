@@ -1,0 +1,230 @@
+{
+  "stages": {
+    "environment": {
+      "completed_at": "2026-10-10T08:58:53",
+      "info": {
+        "integrity_ok": true
+      }
+    },
+    "data_quality": {
+      "completed_at": "2026-10-10T09:02:06",
+      "info": {
+        "test_images_with_near_dup_in_train": 1248
+      }
+    },
+    "split": {
+      "completed_at": "2026-10-10T09:02:07",
+      "info": {
+        "train": 4480,
+        "val": 1120,
+        "test": 1600
+      }
+    },
+    "eda": {
+      "completed_at": "2026-10-10T09:02:11",
+      "info": {}
+    },
+    "train:Baseline-CNN": {
+      "completed_at": "2026-10-10T09:10:45",
+      "info": {
+        "test_acc": 0.623125,
+        "f1_macro": 0.6108839658996712
+      }
+    },
+    "train:EfficientNet-B0": {
+      "completed_at": "2026-10-10T09:25:11",
+      "info": {
+        "test_acc": 0.9575,
+        "f1_macro": 0.9568989690645562
+      }
+    },
+    "train:MobileNetV3-Small": {
+      "completed_at": "2026-10-10T09:35:29",
+      "info": {
+        "test_acc": 0.939375,
+        "f1_macro": 0.9382426119734282
+      }
+    },
+    "train:MobileViT-S": {
+      "completed_at": "2026-10-10T09:58:25",
+      "info": {
+        "test_acc": 0.95125,
+        "f1_macro": 0.9505391199755748
+      }
+    },
+    "train:DeiT-Tiny": {
+      "completed_at": "2026-10-10T10:15:26",
+      "info": {
+        "test_acc": 0.954375,
+        "f1_macro": 0.9532674685156179
+      }
+    },
+    "train:TinyViT-5M": {
+      "completed_at": "2026-10-10T10:30:30",
+      "info": {
+        "test_acc": 0.9375,
+        "f1_macro": 0.9356268527310542
+      }
+    },
+    "train:ResNet-50": {
+      "completed_at": "2026-10-10T10:55:54",
+      "info": {
+        "test_acc": 0.94375,
+        "f1_macro": 0.9433405692230649
+      }
+    },
+    "train:Xception-Reference": {
+      "completed_at": "2026-10-10T11:52:12",
+      "info": {
+        "test_acc": 0.960625,
+        "f1_macro": 0.9600769401084996
+      }
+    },
+    "comparison": {
+      "completed_at": "2026-10-10T11:52:14",
+      "info": {
+        "best": "Xception-Reference"
+      }
+    },
+    "explain": {
+      "completed_at": "2026-10-10T11:52:55",
+      "info": {
+        "explained": [
+          "Xception-Reference",
+          "EfficientNet-B0"
+        ]
+      }
+    },
+    "export_onnx": {
+      "completed_at": "2026-10-10T11:53:03",
+      "info": {
+        "MobileNetV3-Small": {
+          "onnx": "/kaggle/working/results/exports/MobileNetV3-Small.onnx",
+          "size_mb": 6.1,
+          "max_abs_diff": 4.482269287109375e-05,
+          "parity_ok": true
+        },
+        "Xception-Reference": {
+          "onnx": "/kaggle/working/results/exports/Xception-Reference.onnx",
+          "size_mb": 83.18,
+          "max_abs_diff": 6.020069122314453e-06,
+          "parity_ok": true
+        }
+      }
+    },
+    "benchmark": {
+      "completed_at": "2026-10-10T11:53:23",
+      "info": {}
+    },
+    "clean_subset": {
+      "completed_at": "2026-10-10T11:54:48",
+      "info": {
+        "clean_test_images": 438
+      }
+    },
+    "train:Xception-Reference_s43": {
+      "completed_at": "2026-10-10T12:31:23",
+      "info": {
+        "test_acc": 0.95625,
+        "f1_macro": 0.9554595803383078
+      }
+    },
+    "train:Xception-Reference_s44": {
+      "completed_at": "2026-10-10T12:56:24",
+      "info": {
+        "test_acc": 0.9575,
+        "f1_macro": 0.9569569837257341
+      }
+    },
+    "seed_stability": {
+      "completed_at": "2026-10-10T12:56:25",
+      "info": {
+        "best_model": "Xception-Reference"
+      }
+    },
+    "cluster_split": {
+      "completed_at": "2026-10-10T12:58:12",
+      "info": {
+        "n_clusters": 5279,
+        "test_images": 1440
+      }
+    },
+    "train:Baseline-CNN-disjoint": {
+      "completed_at": "2026-10-10T13:13:12",
+      "info": {
+        "test_acc": 0.6666666666666666,
+        "f1_macro": 0.6654188106492832
+      }
+    },
+    "train:EfficientNet-B0-disjoint": {
+      "completed_at": "2026-10-10T13:22:38",
+      "info": {
+        "test_acc": 0.9590277777777778,
+        "f1_macro": 0.9589384024999495
+      }
+    },
+    "train:MobileNetV3-Small-disjoint": {
+      "completed_at": "2026-10-10T13:32:33",
+      "info": {
+        "test_acc": 0.95,
+        "f1_macro": 0.9500135909364468
+      }
+    },
+    "train:MobileViT-S-disjoint": {
+      "completed_at": "2026-10-10T13:54:05",
+      "info": {
+        "test_acc": 0.95625,
+        "f1_macro": 0.9562548623537149
+      }
+    },
+    "train:DeiT-Tiny-disjoint": {
+      "completed_at": "2026-10-10T14:03:06",
+      "info": {
+        "test_acc": 0.9493055555555555,
+        "f1_macro": 0.9493286482563914
+      }
+    },
+    "train:TinyViT-5M-disjoint": {
+      "completed_at": "2026-10-10T14:17:34",
+      "info": {
+        "test_acc": 0.9652777777777778,
+        "f1_macro": 0.965402787472911
+      }
+    },
+    "train:ResNet-50-disjoint": {
+      "completed_at": "2026-10-10T14:38:58",
+      "info": {
+        "test_acc": 0.9548611111111112,
+        "f1_macro": 0.9546107241160311
+      }
+    },
+    "train:Xception-Reference-disjoint": {
+      "completed_at": "2026-10-10T15:29:57",
+      "info": {
+        "test_acc": 0.9666666666666667,
+        "f1_macro": 0.9666589807885346
+      }
+    },
+    "cluster_eval": {
+      "completed_at": "2026-10-10T15:29:58",
+      "info": {
+        "best": "Xception-Reference"
+      }
+    },
+    "ensemble": {
+      "completed_at": "2026-10-10T15:32:14",
+      "info": {
+        "official_acc": 0.951875,
+        "official_macro_f1": 0.9509987297023257,
+        "clean_acc": 0.8584474885844748,
+        "clean_macro_f1": 0.8555054942851521,
+        "disjoint_acc": 0.9694444444444444,
+        "disjoint_macro_f1": 0.9694236904797828
+      }
+    },
+    "summary": {
+      "completed_at": "2026-10-10T15:32:15",
+      "info": {}
+    }
+  }
+}

@@ -1,27 +1,27 @@
 {
-  "best_model": "EfficientNet-B0",
+  "best_model": "Xception-Reference",
   "runs": [
     {
-      "run": "EfficientNet-B0",
+      "run": "Xception-Reference",
       "seed": 42,
       "test acc (%)": 96.06,
       "macro-F1": 0.9601
     },
     {
-      "run": "EfficientNet-B0_s43",
+      "run": "Xception-Reference_s43",
       "seed": 43,
-      "test acc (%)": 96.0,
-      "macro-F1": 0.9596
+      "test acc (%)": 95.62,
+      "macro-F1": 0.9555
     },
     {
-      "run": "EfficientNet-B0_s44",
+      "run": "Xception-Reference_s44",
       "seed": 44,
-      "test acc (%)": 95.88,
-      "macro-F1": 0.9581
+      "test acc (%)": 95.75,
+      "macro-F1": 0.957
     }
   ],
-  "acc_mean": 95.98,
-  "acc_std_pp": 0.07483314773548166,
-  "f1_mean": 0.9592666666666666,
-  "f1_std": 0.0008498365855988055
+  "acc_mean": 95.81,
+  "acc_std_pp": 0.18457157599876117,
+  "f1_mean": 0.9575333333333332,
+  "f1_std": 0.0019154343864744626
 }

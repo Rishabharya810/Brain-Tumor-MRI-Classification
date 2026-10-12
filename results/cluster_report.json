@@ -4,66 +4,66 @@
   "rows": [
     {
       "Model": "Baseline-CNN",
-      "Official split acc (%)": 65.25,
-      "Disjoint acc (%)": 66.46,
-      "Official macro-F1": 0.646,
-      "Disjoint macro-F1": 0.6618,
+      "Official split acc (%)": 62.31,
+      "Disjoint acc (%)": 66.67,
+      "Official macro-F1": 0.6109,
+      "Disjoint macro-F1": 0.6654,
       "Disjoint n": 1440
     },
     {
       "Model": "EfficientNet-B0",
-      "Official split acc (%)": 96.06,
-      "Disjoint acc (%)": 97.08,
-      "Official macro-F1": 0.9601,
-      "Disjoint macro-F1": 0.9708,
+      "Official split acc (%)": 95.75,
+      "Disjoint acc (%)": 95.9,
+      "Official macro-F1": 0.9569,
+      "Disjoint macro-F1": 0.9589,
       "Disjoint n": 1440
     },
     {
       "Model": "MobileNetV3-Small",
-      "Official split acc (%)": 94.31,
-      "Disjoint acc (%)": 94.86,
-      "Official macro-F1": 0.9423,
-      "Disjoint macro-F1": 0.9481,
+      "Official split acc (%)": 93.94,
+      "Disjoint acc (%)": 95.0,
+      "Official macro-F1": 0.9382,
+      "Disjoint macro-F1": 0.95,
       "Disjoint n": 1440
     },
     {
       "Model": "MobileViT-S",
-      "Official split acc (%)": 94.88,
-      "Disjoint acc (%)": 95.21,
-      "Official macro-F1": 0.948,
-      "Disjoint macro-F1": 0.9519,
+      "Official split acc (%)": 95.12,
+      "Disjoint acc (%)": 95.62,
+      "Official macro-F1": 0.9505,
+      "Disjoint macro-F1": 0.9563,
       "Disjoint n": 1440
     },
     {
       "Model": "DeiT-Tiny",
-      "Official split acc (%)": 95.5,
-      "Disjoint acc (%)": 95.56,
-      "Official macro-F1": 0.9543,
-      "Disjoint macro-F1": 0.9557,
+      "Official split acc (%)": 95.44,
+      "Disjoint acc (%)": 94.93,
+      "Official macro-F1": 0.9533,
+      "Disjoint macro-F1": 0.9493,
       "Disjoint n": 1440
     },
     {
       "Model": "TinyViT-5M",
-      "Official split acc (%)": 95.19,
-      "Disjoint acc (%)": 96.74,
-      "Official macro-F1": 0.951,
-      "Disjoint macro-F1": 0.9673,
+      "Official split acc (%)": 93.75,
+      "Disjoint acc (%)": 96.53,
+      "Official macro-F1": 0.9356,
+      "Disjoint macro-F1": 0.9654,
       "Disjoint n": 1440
     },
     {
       "Model": "ResNet-50",
-      "Official split acc (%)": 92.94,
+      "Official split acc (%)": 94.38,
       "Disjoint acc (%)": 95.49,
-      "Official macro-F1": 0.9285,
-      "Disjoint macro-F1": 0.9548,
+      "Official macro-F1": 0.9433,
+      "Disjoint macro-F1": 0.9546,
       "Disjoint n": 1440
     },
     {
       "Model": "Xception-Reference",
-      "Official split acc (%)": 95.88,
-      "Disjoint acc (%)": 96.6,
-      "Official macro-F1": 0.9582,
-      "Disjoint macro-F1": 0.966,
+      "Official split acc (%)": 96.06,
+      "Disjoint acc (%)": 96.67,
+      "Official macro-F1": 0.9601,
+      "Disjoint macro-F1": 0.9667,
       "Disjoint n": 1440
     }
   ]

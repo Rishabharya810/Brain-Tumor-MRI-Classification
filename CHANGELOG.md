@@ -2,7 +2,7 @@
 
 This project is not one notebook; it is four iterations, each of which existed because the previous one taught
 us something. The format follows [Keep a Changelog](https://keepachangelog.com/), adapted for research code.
-Everything below is documented in detail in the [notebook](notebooks/brain_tumor_mri_v2_t4.ipynb) and the
+Everything below is documented in detail in the [notebook](notebooks/brain_tumor_mri.ipynb) and the
 per-version artifacts referenced in each entry.
 
 ## [v8] — T4 edition, the published version — 2026-09-29
@@ -54,7 +54,31 @@ protocols into 99% headlines and hiding the benchmark's hard core.
 The run that shipped to Kaggle and GitHub (identical code to v5; the H1 title corrected 89.5 → 88.81%).
 GPU nondeterminism shifted individual scores within ±0.8 pp and **flipped the best model** from
 TinyViT-5M (96.12%) to EfficientNet-B0 (96.06%) — itself further evidence of benchmark saturation.
-All three-tier conclusions unchanged. Results in this repo are from v7.
+All three-tier conclusions unchanged. Results at the time of this entry were from v7.
+
+## [Publication run — the fresh verified kernel] — 2026-10-10
+
+A fresh full run of the identical pipeline on a new Kaggle kernel: all 32 stages, zero errors,
+~6h35m on one Tesla T4. Every number in this repo now comes from it. **Best model: Xception-Reference
+— the "99% club" recipe itself — at 96.06% official / 89.27% clean remnant / 96.67% family-disjoint.**
+
+**Added**
+- **The third best-model flip, promoted to a finding**: across three independent full runs the winner
+  changed every time — V5: TinyViT-5M (96.12%) → V7: EfficientNet-B0 (96.06%) → this run:
+  Xception-Reference (96.06%) — while the top score stayed inside a ~1pp band. Architecture ranking
+  on this benchmark is noise, and the famous recipe tops the honest protocol at ~96, not 99. The
+  clean-remnant best moved 88.81 → 88.13 → 89.27 across the same runs (±0.6 pp run-to-run).
+- **The glioma-disjoint nuance**: on the family-disjoint exam glioma recall balances out (Xception:
+  0.97 disjoint vs 0.87 official) — the benchmark's famous glioma weakness is partly a leakage
+  artifact, not a model failure.
+
+**Changed**
+- All result tables refreshed from the fresh run: official 62.31–96.06 with the seven pretrained
+  models inside 2.3 points; clean remnant 52.74–89.27 (drops of 6–10 pp for everyone); family-disjoint
+  66.67–96.67. Seed stability: Xception-Reference 95.81 ± 0.18 pp (96.06 / 95.62 / 95.75). Ensemble
+  of the five lightweights: 95.19 / 85.84 / 96.94 (F1 0.9510 / 0.8555 / 0.9694) — never beats the
+  best single model, the third consecutive confirmation. Runtime updated (~6.5 hours on one T4);
+  README and CITATION now point at the fresh kernel. Results in this repo are from this run.
 
 ## [v7] — first complete cloud run — 2026-09-29
 

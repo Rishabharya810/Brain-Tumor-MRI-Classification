@@ -1,8 +1,8 @@
 {
-  "official_acc": 0.958125,
-  "official_macro_f1": 0.9574142603635607,
-  "clean_acc": 0.8789954337899544,
-  "clean_macro_f1": 0.8744723458720778,
-  "disjoint_acc": 0.975,
-  "disjoint_macro_f1": 0.9749858824938477
+  "official_acc": 0.951875,
+  "official_macro_f1": 0.9509987297023257,
+  "clean_acc": 0.8584474885844748,
+  "clean_macro_f1": 0.8555054942851521,
+  "disjoint_acc": 0.9694444444444444,
+  "disjoint_macro_f1": 0.9694236904797828
 }
