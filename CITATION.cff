@@ -11,7 +11,7 @@ repository-code: 'https://github.com/Rishabharya810/brain-tumor-mri-classificati
 abstract: >-
   Four-class brain-tumor MRI classification with a data-quality audit:
   73% of the benchmark's test set shares a perceptual hash with its training
-  split, and the famous 99% recipe scores 95.88% under this honest protocol. Dual metrics (92.9-96.1% full test / 88.13% on the 438 leak-free images / 94.9-97.1% on a family-disjoint re-split),
+  split, and the famous 99% recipe scores 96.06% under this honest protocol. Dual metrics (93.8-96.1% full test / 89.27% on the 438 leak-free images / 94.9-96.7% on a family-disjoint re-split),
   a 90k-parameter baseline, 3-seed stability, and Grad-CAM failure analysis.
 keywords:
   - brain-tumor
