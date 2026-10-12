@@ -144,3 +144,7 @@ Everything ran on a single Kaggle Tesla T4 in **~8 hours**, executed top-to-bott
 - Dataset: [Brain Tumor MRI Dataset](https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset) by Masoud Nickparvar — **CC BY 4.0** (full attribution in [data/LICENSES/THIRD-PARTY-NOTICES.md](data/LICENSES/THIRD-PARTY-NOTICES.md)); underlying sources: Figshare (Cheng et al.), SARTAJ, Br35H.
 - Code: MIT (see [LICENSE](LICENSE)).
 - Built by Rishab Arya · M.Tech CSE (Data Science), Bennett University.
+
+### Authorship note
+
+The code in this project was developed with an LLM coding agent (ZCode, running GLM-5.3) under my direction. The research questions, the audit design (near-duplicate thresholds, the three-exam evaluation, the family-disjoint re-split), and every modeling decision are mine; I reviewed the code and results stage by stage and verified every number against the pipeline's own artifacts. I can walk through any stage of this project without the assistant.
